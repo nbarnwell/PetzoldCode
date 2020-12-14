@@ -14,17 +14,6 @@ namespace PetzoldCode.Tests
             return Hardware.Relay(() => !input(), power);
         }
 
-        /// <summary>
-        ///           _________
-        ///  Input1 --|        \
-        ///           |         \__Output
-        ///  Input2 --|         /
-        ///           |________/
-        ///
-        /// </summary>
-        /// <param name="input1"></param>
-        /// <param name="input2"></param>
-        /// <returns></returns>
         public static Func<bool> AndGate(Func<bool> input1, Func<bool> input2)
         {
             var relay1 = Hardware.Relay(input1);
@@ -64,6 +53,14 @@ namespace PetzoldCode.Tests
             var andGate = AndGate(orGate, nandGate);
 
             return andGate;
+        }
+
+        public static Func<bool>[] HalfAdder(Func<bool> input1, Func<bool> input2)
+        {
+            var sumOut = XorGate(input1, input2);
+            var carryOut = AndGate(input1, input2);
+
+            return new[] {sumOut, carryOut};
         }
     }
 }
