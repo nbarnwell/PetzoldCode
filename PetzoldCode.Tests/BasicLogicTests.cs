@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace PetzoldCode.Tests
 {
-    public class Tests
+    public class BasicLogicTests
     {
         [Test]
         [TestCase(false, ExpectedResult = false)]
