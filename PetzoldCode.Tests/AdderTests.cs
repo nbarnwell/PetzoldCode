@@ -36,17 +36,21 @@ namespace PetzoldCode.Tests
         }
 
         [Test]
-        [TestCase("00000001", "00000000", ExpectedResult = "000000010")]
-        [TestCase("00000001", "00000001", ExpectedResult = "000000100")]
-        [TestCase("00000010", "00000001", ExpectedResult = "000000110")]
+        [TestCase("00000001", "00000000", ExpectedResult = "0-00000001")]
+        [TestCase("00000001", "00000001", ExpectedResult = "0-00000010")]
+        [TestCase("00000010", "00000001", ExpectedResult = "0-00000011")]
         public string NBitAdder_behaviour(string input1, string input2)
         {
-            var inputArray1 = input1.Select(x => x != '0').ToArray();
-            var inputArray2 = input2.Select(x => x != '0').ToArray();
+            var inputArray1 = input1.Reverse().Select(x => x != '0').ToArray();
+            var inputArray2 = input2.Reverse().Select(x => x != '0').ToArray();
 
             var adder = Logic.NBitAdder(inputArray1, inputArray2, false);
 
-            var actual = string.Join("", adder.Select(x => x() ? '1' : '0'));
+            var result = adder.Reverse();
+            var carry  = result.Take(1).Select(x => x() ? '1' : '0').Single();
+            var value  = result.Skip(1).Select(x => x() ? '1' : '0').ToArray();
+
+            var actual = carry + "-" + string.Join("", value);
             return actual;
         }
     }
