@@ -83,5 +83,15 @@ namespace PetzoldCode.Tests
         {
             return Logic.NorGate(() => input1, () => input2)();
         }
+
+        [Test]
+        [TestCase(false, false, ExpectedResult = false)]
+        [TestCase(false, true, ExpectedResult = true)]
+        [TestCase(true, false, ExpectedResult = true)]
+        [TestCase(true, true, ExpectedResult = false)]
+        public bool XorGate_behaviour(bool input1, bool input2)
+        {
+            return Logic.XorGate(() => input1, () => input2)();
+        }
     }
 }

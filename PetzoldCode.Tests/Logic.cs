@@ -56,5 +56,14 @@ namespace PetzoldCode.Tests
 
             return inverter;
         }
+
+        public static Func<bool> XorGate(Func<bool> input1, Func<bool> input2)
+        {
+            var orGate = OrGate(input1, input2);
+            var nandGate = NandGate(input1, input2);
+            var andGate = AndGate(orGate, nandGate);
+
+            return andGate;
+        }
     }
 }
