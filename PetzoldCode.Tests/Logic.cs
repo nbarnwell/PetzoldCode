@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace PetzoldCode.Tests
 {
@@ -80,7 +81,20 @@ namespace PetzoldCode.Tests
             };
         }
 
-        public struct AdderOutput
+        public static IEnumerable<Func<bool>> NBitAdder(bool[] input1, bool[] input2, bool carryIn)
+        {
+            AdderOutput adder = null;
+            for (int i = 0; i < input1.Length; i++)
+            {
+                var index = i;
+                adder = FullAdder(() => input1[index], () => input2[index], adder == null ? () => carryIn : adder.CarryOut);
+                yield return adder.SumOut;
+            }
+
+            yield return adder.CarryOut;
+        }
+
+        public class AdderOutput
         {
             public Func<bool> SumOut { get; set; }
             public Func<bool> CarryOut { get; set; }

@@ -1,4 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using NUnit.Framework;
 
 namespace PetzoldCode.Tests
 {
@@ -29,6 +33,18 @@ namespace PetzoldCode.Tests
         {
             var adder = Logic.FullAdder(() => input1, () => input2, () => carry);
             return new[] {adder.SumOut(), adder.CarryOut()};
+        }
+
+        [Test]
+        [TestCase(new[] {false, false, false, false, false, false, false, true}, new[] {false, false, false, false, false, false, false, false}, ExpectedResult = new[] {false, false, false, false, false, false, false, true, false})]
+        [TestCase(new[] {false, false, false, false, false, false, false, true}, new[] {false, false, false, false, false, false, false, true}, ExpectedResult = new[] {false, false, false, false, false, false, true, false, false})]
+        [TestCase(new[] {false, false, false, false, false, false, true, false}, new[] {false, false, false, false, false, false, false, true}, ExpectedResult = new[] {false, false, false, false, false, false, true, true, false})]
+        public bool[] NBitAdder_behaviour(bool[] inputArray1, bool[] inputArray2)
+        {
+            var adder = Logic.NBitAdder(inputArray1, inputArray2, false);
+
+            var actual = adder.Select(x => x()).ToArray();
+            return actual;
         }
     }
 }
