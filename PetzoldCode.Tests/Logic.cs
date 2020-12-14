@@ -33,6 +33,14 @@ namespace PetzoldCode.Tests
             return relay2;
         }
 
+        public static Func<bool> NandGate(bool input1, bool input2)
+        {
+            var andGate = AndGate(input1, input2);
+            var inverter = Inverter(andGate());
+
+            return inverter;
+        }
+
         public static Func<bool> OrGate(bool input1, bool input2)
         {
             var relay1 = Relay(input1);

@@ -47,6 +47,16 @@ namespace PetzoldCode.Tests
         }
 
         [Test]
+        [TestCase(false, false, ExpectedResult = true)]
+        [TestCase(false, true, ExpectedResult = true)]
+        [TestCase(true, false, ExpectedResult = true)]
+        [TestCase(true, true, ExpectedResult = false)]
+        public bool NandGate_behaviour(bool input1, bool input2)
+        {
+            return Logic.NandGate(input1, input2)();
+        }
+
+        [Test]
         [TestCase(false, false, ExpectedResult = false)]
         [TestCase(false, true, ExpectedResult = true)]
         [TestCase(true, false, ExpectedResult = true)]
