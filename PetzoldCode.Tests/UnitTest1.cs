@@ -29,6 +29,14 @@ namespace PetzoldCode.Tests
         }
 
         [Test]
+        [TestCase(false, ExpectedResult = true)]
+        [TestCase(true, ExpectedResult = false)]
+        public bool InverterRelay_behaviour(bool input)
+        {
+            return Logic.InverterRelay(input)();
+        }
+
+        [Test]
         [TestCase(false, false, ExpectedResult = false)]
         [TestCase(false, true, ExpectedResult = false)]
         [TestCase(true, false, ExpectedResult = false)]

@@ -9,6 +9,11 @@ namespace PetzoldCode.Tests
             return () => input && power;
         }
 
+        public static Func<bool> InverterRelay(bool input, bool power = true)
+        {
+            return () => !input && power;
+        }
+
         /// <summary>
         ///           _________
         ///  Input1 --|        \
