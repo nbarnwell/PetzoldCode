@@ -25,7 +25,7 @@ namespace PetzoldCode.Tests
         [TestCase(true, ExpectedResult = true)]
         public bool Relay_behaviour(bool input)
         {
-            return Hardware.Relay(input)();
+            return Hardware.Relay(() => input)();
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace PetzoldCode.Tests
         [TestCase(true, ExpectedResult = true)]
         public bool Buffer_behaviour(bool input)
         {
-            return Logic.Buffer(input)();
+            return Logic.Buffer(() => input)();
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace PetzoldCode.Tests
         [TestCase(true, ExpectedResult = false)]
         public bool InverterRelay_behaviour(bool input)
         {
-            return Logic.Inverter(input)();
+            return Logic.Inverter(() => input)();
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace PetzoldCode.Tests
         [TestCase(true, true, ExpectedResult = true)]
         public bool AndGate_behaviour(bool input1, bool input2)
         {
-            return Logic.AndGate(input1, input2)();
+            return Logic.AndGate(() => input1, () => input2)();
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace PetzoldCode.Tests
         [TestCase(true, true, ExpectedResult = false)]
         public bool NandGate_behaviour(bool input1, bool input2)
         {
-            return Logic.NandGate(input1, input2)();
+            return Logic.NandGate(() => input1, () => input2)();
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace PetzoldCode.Tests
         [TestCase(true, true, ExpectedResult = true)]
         public bool OrGate_behaviour(bool input1, bool input2)
         {
-            return Logic.OrGate(input1, input2)();
+            return Logic.OrGate(() => input1, () => input2)();
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace PetzoldCode.Tests
         [TestCase(true, true, ExpectedResult = false)]
         public bool NorGate_behaviour(bool input1, bool input2)
         {
-            return Logic.NorGate(input1, input2)();
+            return Logic.NorGate(() => input1, () => input2)();
         }
     }
 }
