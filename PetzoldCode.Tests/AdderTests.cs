@@ -36,14 +36,17 @@ namespace PetzoldCode.Tests
         }
 
         [Test]
-        [TestCase(new[] {false, false, false, false, false, false, false, true}, new[] {false, false, false, false, false, false, false, false}, ExpectedResult = new[] {false, false, false, false, false, false, false, true, false})]
-        [TestCase(new[] {false, false, false, false, false, false, false, true}, new[] {false, false, false, false, false, false, false, true}, ExpectedResult = new[] {false, false, false, false, false, false, true, false, false})]
-        [TestCase(new[] {false, false, false, false, false, false, true, false}, new[] {false, false, false, false, false, false, false, true}, ExpectedResult = new[] {false, false, false, false, false, false, true, true, false})]
-        public bool[] NBitAdder_behaviour(bool[] inputArray1, bool[] inputArray2)
+        [TestCase("00000001", "00000000", ExpectedResult = "000000010")]
+        [TestCase("00000001", "00000001", ExpectedResult = "000000100")]
+        [TestCase("00000010", "00000001", ExpectedResult = "000000110")]
+        public string NBitAdder_behaviour(string input1, string input2)
         {
+            var inputArray1 = input1.Select(x => x != '0').ToArray();
+            var inputArray2 = input2.Select(x => x != '0').ToArray();
+
             var adder = Logic.NBitAdder(inputArray1, inputArray2, false);
 
-            var actual = adder.Select(x => x()).ToArray();
+            var actual = string.Join("", adder.Select(x => x() ? '1' : '0'));
             return actual;
         }
     }
