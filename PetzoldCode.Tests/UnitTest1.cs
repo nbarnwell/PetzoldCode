@@ -33,7 +33,7 @@ namespace PetzoldCode.Tests
         [TestCase(true, ExpectedResult = false)]
         public bool InverterRelay_behaviour(bool input)
         {
-            return Logic.InverterRelay(input)();
+            return Logic.Inverter(input)();
         }
 
         [Test]
@@ -54,6 +54,16 @@ namespace PetzoldCode.Tests
         public bool OrGate_behaviour(bool input1, bool input2)
         {
             return Logic.OrGate(input1, input2)();
+        }
+
+        [Test]
+        [TestCase(false, false, ExpectedResult = true)]
+        [TestCase(false, true, ExpectedResult = false)]
+        [TestCase(true, false, ExpectedResult = false)]
+        [TestCase(true, true, ExpectedResult = false)]
+        public bool NorGate_behaviour(bool input1, bool input2)
+        {
+            return Logic.NorGate(input1, input2)();
         }
     }
 }

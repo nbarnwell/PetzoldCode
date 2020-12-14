@@ -9,9 +9,9 @@ namespace PetzoldCode.Tests
             return () => input && power;
         }
 
-        public static Func<bool> InverterRelay(bool input, bool power = true)
+        public static Func<bool> Inverter(bool input, bool power = true)
         {
-            return () => !input && power;
+            return Relay(!input, power);
         }
 
         /// <summary>
@@ -39,6 +39,14 @@ namespace PetzoldCode.Tests
             var relay2 = Relay(input2);
 
             return () => relay1() || relay2();
+        }
+
+        public static Func<bool> NorGate(bool input1, bool input2)
+        {
+            var orGate = OrGate(input1, input2);
+            var inverter = Inverter(orGate());
+
+            return inverter;
         }
 
         public static Func<bool> Lamp(bool input)
