@@ -4,14 +4,14 @@ namespace PetzoldCode.Tests
 {
     public static class Logic
     {
-        public static Func<bool> Relay(bool input, bool power = true)
+        public static Func<bool> Buffer(bool input, bool power = true)
         {
-            return () => input && power;
+            return Hardware.Relay(input, power);
         }
 
         public static Func<bool> Inverter(bool input, bool power = true)
         {
-            return Relay(!input, power);
+            return Hardware.Relay(!input, power);
         }
 
         /// <summary>
@@ -27,8 +27,8 @@ namespace PetzoldCode.Tests
         /// <returns></returns>
         public static Func<bool> AndGate(bool input1, bool input2)
         {
-            var relay1 = Relay(input1);
-            var relay2 = Relay(input2, relay1());
+            var relay1 = Hardware.Relay(input1);
+            var relay2 = Hardware.Relay(input2, relay1());
 
             return relay2;
         }
@@ -43,8 +43,8 @@ namespace PetzoldCode.Tests
 
         public static Func<bool> OrGate(bool input1, bool input2)
         {
-            var relay1 = Relay(input1);
-            var relay2 = Relay(input2);
+            var relay1 = Hardware.Relay(input1);
+            var relay2 = Hardware.Relay(input2);
 
             return () => relay1() || relay2();
         }
@@ -55,16 +55,6 @@ namespace PetzoldCode.Tests
             var inverter = Inverter(orGate());
 
             return inverter;
-        }
-
-        public static Func<bool> Lamp(bool input)
-        {
-            return () => input;
-        }
-
-        public static Func<bool> Switch(bool closed)
-        {
-            return () => closed;
         }
     }
 }

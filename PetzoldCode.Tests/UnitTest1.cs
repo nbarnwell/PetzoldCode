@@ -9,7 +9,7 @@ namespace PetzoldCode.Tests
         [TestCase(true, ExpectedResult = true)]
         public bool Switch_behaviour(bool input)
         {
-            return Logic.Switch(input)();
+            return HumanInterfaceDevices.Switch(input)();
         }
 
         [Test]
@@ -17,7 +17,7 @@ namespace PetzoldCode.Tests
         [TestCase(true, ExpectedResult = true)]
         public bool Lamp_behaviour(bool input)
         {
-            return Logic.Lamp(input)();
+            return HumanInterfaceDevices.Lamp(input)();
         }
 
         [Test]
@@ -25,7 +25,15 @@ namespace PetzoldCode.Tests
         [TestCase(true, ExpectedResult = true)]
         public bool Relay_behaviour(bool input)
         {
-            return Logic.Relay(input)();
+            return Hardware.Relay(input)();
+        }
+
+        [Test]
+        [TestCase(false, ExpectedResult = false)]
+        [TestCase(true, ExpectedResult = true)]
+        public bool Buffer_behaviour(bool input)
+        {
+            return Logic.Buffer(input)();
         }
 
         [Test]
