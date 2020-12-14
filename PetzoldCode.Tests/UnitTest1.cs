@@ -7,6 +7,22 @@ namespace PetzoldCode.Tests
         [Test]
         [TestCase(false, ExpectedResult = false)]
         [TestCase(true, ExpectedResult = true)]
+        public bool Switch_behaviour(bool input)
+        {
+            return Logic.Switch(input)();
+        }
+
+        [Test]
+        [TestCase(false, ExpectedResult = false)]
+        [TestCase(true, ExpectedResult = true)]
+        public bool Lamp_behaviour(bool input)
+        {
+            return Logic.Lamp(input)();
+        }
+
+        [Test]
+        [TestCase(false, ExpectedResult = false)]
+        [TestCase(true, ExpectedResult = true)]
         public bool Relay_behaviour(bool input)
         {
             return Logic.Relay(input)();
