@@ -55,12 +55,35 @@ namespace PetzoldCode.Tests
             return andGate;
         }
 
-        public static Func<bool>[] HalfAdder(Func<bool> input1, Func<bool> input2)
+        public static AdderOutput HalfAdder(Func<bool> input1, Func<bool> input2)
         {
             var sumOut = XorGate(input1, input2);
             var carryOut = AndGate(input1, input2);
 
-            return new[] {sumOut, carryOut};
+            return new AdderOutput
+            {
+                SumOut = sumOut,
+                CarryOut = carryOut
+            };
+        }
+
+        public static AdderOutput FullAdder(Func<bool> input1, Func<bool> input2, Func<bool> carry)
+        {
+            var inputAdder = HalfAdder(input1, input2);
+            var carryAdder = HalfAdder(carry, inputAdder.SumOut);
+            var carryOut = OrGate(carryAdder.CarryOut, inputAdder.CarryOut);
+
+            return new AdderOutput
+            {
+                SumOut = carryAdder.SumOut,
+                CarryOut = carryOut
+            };
+        }
+
+        public struct AdderOutput
+        {
+            public Func<bool> SumOut { get; set; }
+            public Func<bool> CarryOut { get; set; }
         }
     }
 }
