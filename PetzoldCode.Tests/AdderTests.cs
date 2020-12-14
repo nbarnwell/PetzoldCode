@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,13 +37,30 @@ namespace PetzoldCode.Tests
         }
 
         [Test]
-        [TestCase("00000001", "00000000", ExpectedResult = "0-00000001")]
-        [TestCase("00000001", "00000001", ExpectedResult = "0-00000010")]
-        [TestCase("00000010", "00000001", ExpectedResult = "0-00000011")]
-        public string NBitAdder_behaviour(string input1, string input2)
+        [TestCase(0, ExpectedResult = "00000000")]
+        [TestCase(1, ExpectedResult = "00000001")]
+        [TestCase(2, ExpectedResult = "00000010")]
+        [TestCase(8, ExpectedResult = "00001000")]
+        [TestCase(128, ExpectedResult = "10000000")]
+        [TestCase(255, ExpectedResult = "11111111")]
+        public string Convert_int_to_binary(int value)
         {
-            var inputArray1 = input1.Reverse().Select(x => x != '0').ToArray();
-            var inputArray2 = input2.Reverse().Select(x => x != '0').ToArray();
+            return ConvertToBinary(value);
+        }
+
+        private static string ConvertToBinary(int value)
+        {
+            return Convert.ToString(value, 2).PadLeft(8, '0');
+        }
+
+        [Test]
+        [TestCase(1, 0, ExpectedResult = "0-00000001")]
+        [TestCase(1, 1, ExpectedResult = "0-00000010")]
+        [TestCase(2, 1, ExpectedResult = "0-00000011")]
+        public string NBitAdder_behaviour(int input1, int input2)
+        {
+            var inputArray1 = Convert.ToString(input1, 2).PadLeft(8, '0').Reverse().Select(x => x == '1').ToArray();
+            var inputArray2 = Convert.ToString(input2, 2).PadLeft(8, '0').Reverse().Select(x => x == '1').ToArray();
 
             var adder = Logic.NBitAdder(inputArray1, inputArray2, false);
 
