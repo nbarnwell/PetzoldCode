@@ -1,8 +1,8 @@
 using System;
 
-namespace PetzoldCode.Tests
+namespace PetzoldCode
 {
-    static internal class Hardware
+    public static class Hardware
     {
         public static Func<bool> Relay(Func<bool> input, bool power = true)
         {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PetzoldCode.Tests
+namespace PetzoldCode
 {
     public static class Logic
     {

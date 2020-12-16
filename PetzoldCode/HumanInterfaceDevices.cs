@@ -1,8 +1,8 @@
 using System;
 
-namespace PetzoldCode.Tests
+namespace PetzoldCode
 {
-    static internal class HumanInterfaceDevices
+    public static class HumanInterfaceDevices
     {
         public static Func<bool> Lamp(bool input)
         {
