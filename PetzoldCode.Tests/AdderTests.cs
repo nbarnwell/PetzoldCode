@@ -54,22 +54,47 @@ namespace PetzoldCode.Tests
         }
 
         [Test]
-        [TestCase(1, 0, ExpectedResult = "0-00000001")]
-        [TestCase(1, 1, ExpectedResult = "0-00000010")]
-        [TestCase(2, 1, ExpectedResult = "0-00000011")]
-        public string NBitAdder_behaviour(int input1, int input2)
+        public void Convert_int_to_boolarray_and_back()
+        {
+            Enumerable.Range(1, int.MaxValue)
+                      .Select(x =>
+                      {
+                          var arr = 
+                              Convert.ToString(x, 2)
+                                     .PadLeft(8, '0')
+                                     //.Reverse()
+                                     .Select(x => x == '1')
+                                     .ToArray();
+
+                          var bytes = new byte[4];
+                          new BitArray(arr).CopyTo(bytes, 0);
+
+                          Assert.AreEqual(x, BitConverter.ToInt32(bytes, 0));
+
+                          return 0;
+                      });
+        }
+
+        [Test]
+        [TestCase(1, 0, 1, false)]
+        [TestCase(1, 1, 2, false)]
+        [TestCase(2, 1, 3, false)]
+        public void NBitAdder_behaviour(int input1, int input2, int expectedResult, bool expectedCarryResult)
         {
             var inputArray1 = Convert.ToString(input1, 2).PadLeft(8, '0').Reverse().Select(x => x == '1').ToArray();
             var inputArray2 = Convert.ToString(input2, 2).PadLeft(8, '0').Reverse().Select(x => x == '1').ToArray();
 
             var adder = Logic.NBitAdder(inputArray1, inputArray2, false);
 
-            var result = adder.Reverse();
-            var carry  = result.Take(1).Select(x => x() ? '1' : '0').Single();
-            var value  = result.Skip(1).Select(x => x() ? '1' : '0').ToArray();
+            var result = adder.Reverse().Select(x => x());
+            var carry  = result.Take(1).Single();
+            var value  = result.Skip(1).ToArray();
 
-            var actual = carry + "-" + string.Join("", value);
-            return actual;
+            var bytes = new byte[4];
+            new BitArray(value).CopyTo(bytes, 0);
+
+            Assert.AreEqual(expectedResult, BitConverter.ToInt32(bytes, 0));
+            Assert.AreEqual(expectedCarryResult, carry);
         }
     }
 }
